@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mydeployment
+  labels:
+    app: mywebapp
+    tier: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mywebapp
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        app: mywebapp
+        tier: frontend
+    spec: # Pod spec
+      containers:
+      - name: mycontainer
+        image: devopsjourney1/mywebapp
+        ports:
+        - containerPort: 80

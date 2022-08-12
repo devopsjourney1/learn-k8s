@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mywebapp
+  labels:
+    app: mywebapp
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    name: flask
+  selector:
+    app: mywebapp
+    tier: frontend
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mydeployment
+  labels:
+    app: mywebapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mywebapp
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        app: mywebapp
+        tier: frontend
+    spec: # Pod spec
+      containers:
+      - name: mycontainer
+        image: devopsjourney1/mywebapp
+        ports:
+        - containerPort: 80
