@@ -17,11 +17,11 @@ spec:
 kind: ConfigMap 
 apiVersion: v1 
 metadata:
-  name: myconfigmapv1.0
+  name: myconfigmapv1.1
 data:
   BG_COLOR: '#12181b'
   FONT_COLOR: '#FFFFFF'
-  CUSTOM_HEADER: 'Customized with a configmap!'
+  CUSTOM_HEADER: 'DevOps Journey!'
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -48,4 +48,4 @@ spec:
         - containerPort: 80
         envFrom:
         - configMapRef:
-            name: myconfigmapv1.0
+            name: myconfigmapv1.1

@@ -1,5 +1,6 @@
 
 # Minikube commands
+Installation: https://minikube.sigs.k8s.io/docs/start/
 ```
 minikube config set driver docker
 minikube start // stop
@@ -8,8 +9,14 @@ minikube dashboard --url
 minikube service <applicaiton-service-name>
 ```
 
-# Kubectl Configuration
+# Kubectl Insallation/Configuration
+Installation: https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/
+
 ```
+curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+
+
 cat ~/.kube/config  // kubectl config view
 alias k='kubectl'
 ```
@@ -64,48 +71,33 @@ minikube service hello-node
 //On cloud providers that support load balancers, an external IP address would be provisioned to access the Service. On minikube, the LoadBalancer type makes the Service accessible through the minikube service command.
 ```
 
-# Create V1 of app
-- pod creation
+# Deployments 
+```
+kubectl apply -f solution/v1.yaml
+```
 
-# Create V2 of app (load Balancer and scaling)
-- Service creation
-- will get warning because used appy but service didnt exist yet
-- scale up to 5, apply, show off name
+# Service LoadBalancers 
+```
+kubectl apply -f solution/v2.yaml
+```
 
-# Create V3 of app - config maps/rolling back
-- show of how the container works
-- add config map
-- map to it in container
-- apply, show off.
-- mention that if you make a change, should create a new config map, and map to the new one
+# Config Maps and Scaling 
+```
+kubectl apply -f solution/v3.yaml
+```
 
-# Create v4 of app - resources
-- talk about the resource config
-- apply, describe
+# Resource Limits
+```
+kubectl apply -f solution/v4.yaml
+```
 
 
-# Extra
+
+# Troubleshooting, Logs, Rollouts, Draining Nodes 
 k describe deployment mydeployment
 ### Logs
 k logs -f -l app=mywebapp
 ### Rollouts
 kubectl rollout 
 k rollout restart deployment mydeployment
-
-
-
-
-
-
-
-
-
-https://minikube.sigs.k8s.io/docs/handbook/pushing/
-```
-& minikube -p minikube docker-env --shell powershell | Invoke-Expression
-```
-
-
-```
-k apply -f test.yml
-```
+kubectl drain minikube --ignore-daemonsets=true --force
